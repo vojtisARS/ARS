@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>ARS Systém</title>
-    <!-- Ikona pro mobil -->
+    
+    <!-- RYCHLOST: Tento řádek začne přesměrování okamžitě, jakmile se načte hlavička -->
+    <meta http-equiv="refresh" content="0.1; url=https://tally.so/r/0QoN10">
+
     <link rel="apple-touch-icon" href="favicon.png">
     <link rel="icon" type="image/png" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="manifest.json">
     
     <style>
+        /* RYCHLOST: Osekal jsem styly, aby se stránka vykreslila bleskově */
         body { background: white; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
         .box { text-align: center; }
         img { width: 120px; border-radius: 20%; }
@@ -22,10 +26,13 @@
     </div>
 
     <script>
-        // Počkáme 2 vteřiny, aby si mobil stihl uložit ikonu do paměti
+        // TADY MĚNÍŠ ČAS: 
+        // Pro běžný provoz nechej 100 (vše poletí bleskově)
+        // Když instaluješ u zámečníka, změň 100 na 99999, aby stránka neutekla a šla přidat na plochu
+        
         setTimeout(function() {
             window.location.replace("https://tally.so/r/0QoN10");
-        }, 500);
+        }, 100); 
     </script>
 </body>
 </html>
