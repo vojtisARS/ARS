@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>ARS Systém</title>
     
-    <!-- Přesměrování se spustí jen pokud je mobil online -->
     <script>
+        // RYCHLÝ REDIRECT: Pokud net jede, začneme hned načítat Tally
         if (navigator.onLine) {
             document.write('<meta http-equiv="refresh" content="0.1; url=https://tally.so/r/0QoN10">');
         }
@@ -20,30 +20,30 @@
         body { background: white; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
         .box { text-align: center; }
         img { width: 120px; border-radius: 20%; }
-        /* Styl pro varovnou hlášku */
-        .offline-msg { display: none; color: #d9534f; font-weight: bold; margin-top: 10px; }
+        /* Styl pro offline hlášku */
+        .offline-msg { color: #d9534f; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="box">
         <img src="favicon.png">
-        <p id="status-text">Načítám...</p>
+        
+        <!-- VÝCHOZÍ STAV: Nejdřív ukazujeme offline, skript to změní, jen když net jede -->
         <div id="offline-info" class="offline-msg">⚠️ Jsi offline. Zkontroluj data.</div>
+        <p id="status-text" style="display:none;">Načítám...</p>
     </div>
 
     <script>
-        // Funkce zkontroluje, jestli má zámečník signál
-        if (!navigator.onLine) {
-            document.getElementById('status-text').style.display = 'none';
-            document.getElementById('offline-info').style.display = 'block';
-        }
+        // Pokud internet JEDE:
+        if (navigator.onLine) {
+            document.getElementById('offline-info').style.display = 'none';
+            document.getElementById('status-text').style.display = 'block';
 
-        // TADY MĚNÍŠ ČAS: (100 pro provoz / 99999 pro instalaci)
-        setTimeout(function() {
-            if (navigator.onLine) {
+            // TADY MĚNÍŠ ČAS: (100 pro provoz / 99999 pro instalaci)
+            setTimeout(function() {
                 window.location.replace("https://tally.so/r/0QoN10");
-            }
-        }, 100); 
+            }, 100); 
+        }
     </script>
 </body>
 </html>
