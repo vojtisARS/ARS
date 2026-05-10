@@ -3,38 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>ARS Systém</title>
+    
+    <script>
+        // --- 1. BOD PRO INSTALACI (META REDIRECT) ---
+        // PŘI BĚŽNÉM PROVOZU: Nechej řádek níže tak, jak je.
+        // PŘI INSTALACI: Dej na začátek řádku dvě lomítka // (vypneš bleskový odlet).
+        
+        if (navigator.onLine) {
+            // document.write('<meta http-equiv="refresh" content="0.1; url=https://tally.so/r/0QoN10">');
+        }
+    </script>
+
     <link rel="apple-touch-icon" href="favicon.png">
     <link rel="icon" type="image/png" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="manifest.json">
     
     <style>
-        body { background: white; color: black; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        body { background: white; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
         .box { text-align: center; }
-        img { width: 120px; border-radius: 20%; margin-bottom: 20px; }
-        .offline-msg { color: #d9534f; font-weight: bold; font-size: 1.1rem; padding: 10px; }
+        img { width: 120px; border-radius: 20%; }
+        .offline-msg { color: #d9534f; font-weight: bold; margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
     <div class="box">
         <img src="favicon.png">
-        <div id="content">
-            <p id="status-text">Načítám...</p>
-        </div>
+        <!-- Tato hláška se ukáže jen když vypadne net -->
+        <div id="offline-info" class="offline-msg">⚠️ Jsi offline. Zkontroluj data.</div>
+        <p id="status-text" style="display:none;">Načítám...</p>
     </div>
 
     <script>
+        const offlineInfo = document.getElementById('offline-info');
         const statusText = document.getElementById('status-text');
 
         if (navigator.onLine) {
-            // ONLINE - Letíme na Tally
+            offlineInfo.style.display = 'none';
+            statusText.style.display = 'block';
+
+            // --- 2. BOD PRO INSTALACI (TIMEOUT) ---
+            // TADY MĚNÍŠ ČAS: (99999 pro instalaci u zámečníka, 100 pro ostrý provoz)
+            
             setTimeout(function() {
-                window.location.replace("https://tally.so");
-            }, 100); // TADY DÁVÁŠ 99999 PŘI INSTALACI
+                window.location.replace("https://tally.so/r/0QoN10");
+            }, 99999); 
+
         } else {
-            // OFFLINE - Tvoje vlastní hláška
-            statusText.innerHTML = "⚠️ Nemáte připojení k internetu.<br><small style='color:#666'>Zkontrolujte signál nebo data.</small>";
-            statusText.className = "offline-msg";
+            // Pokud je offline, zobrazíme červenou hlášku
+            offlineInfo.style.display = 'block';
+            statusText.style.display = 'none';
         }
     </script>
 </body>
