@@ -10,7 +10,7 @@
         // PŘI INSTALACI: Dej na začátek řádku dvě lomítka // (vypneš bleskový odlet).
         
         if (navigator.onLine) {
-            // document.write('<meta http-equiv="refresh" content="0.1; url=https://tally.so/r/0QoN10">');
+             document.write('<meta http-equiv="refresh" content="0.1; url=https://tally.so/r/0QoN10">');
         }
     </script>
 
@@ -44,10 +44,11 @@
 
             // --- 2. BOD PRO INSTALACI (TIMEOUT) ---
             // TADY MĚNÍŠ ČAS: (99999 pro instalaci u zámečníka, 100 pro ostrý provoz)
+            // při zadávání odkazu dám: /?v=(číslo višší nebo jiné než jsem dával minule)
             
             setTimeout(function() {
                 window.location.replace("https://tally.so/r/0QoN10");
-            }, 99999); 
+            }, 100); 
 
         } else {
             // Pokud je offline, zobrazíme červenou hlášku
