@@ -3,63 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>ARS Systém</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="manifest" href="manifest.json">
     
     <script>
-        // --- TENTO ŘÁDEK DOVOLÍ APLIKACI ČÍST ID Z ADRESY ---
+        // 1. Vytáhneme "id" z adresního řádku (pokud tam je)
         const urlParams = new URLSearchParams(window.location.search);
-        const clientId = urlParams.get('id') || ''; // Vytáhne číslo ID (např. 1)
-        const tallyUrl = clientId ? 'https://tally.so/r/0QoN10?id=' + clientId : 'https://tally.so/r/0QoN10';
+        let clientId = urlParams.get('id');
 
-        // --- 1. BOD PRO INSTALACI (META REDIRECT) ---
+        if (clientId) {
+            // Pokud jsme v prohlížeči a vidíme ID, uložíme ho pod naším unikátním štítkem
+            localStorage.setItem('ars_client_id', clientId);
+        } else {
+            // Pokud jsme spustili apku z plochy a ID v URL chybí, vytáhneme ho z paměti
+            clientId = localStorage.getItem('ars_client_id');
+        }
+
+        // Příprava finálního odkazu pro přesměrování do Tally
+        const tallyUrl = clientId ? 'https://tally.so/r/0QoN10?id=' + clientId : '';
+
+        // --- BOD PRO INSTALACI (META REDIRECT) ---
         // PŘI BĚŽNÉM PROVOZU: Nechej řádek níže tak, jak je.
         // PŘI INSTALACI: Dej na začátek řádku dvě lomítka // (vypneš bleskový odlet).
         
-        if (navigator.onLine) {
+       // if (navigator.onLine && tallyUrl) {
              document.write('<meta http-equiv="refresh" content="0.1; url=' + tallyUrl + '">');
         }
     </script>
 
-    <link rel="apple-touch-icon" href="favicon.png">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="manifest.json">
-    
     <style>
         body { background: white; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
-        .box { text-align: center; }
+        .box { text-align: center; max-width: 320px; padding: 20px; }
         img { width: 120px; border-radius: 20%; }
         .offline-msg { color: #d9534f; font-weight: bold; margin-top: 15px; display: none; }
+        .error-msg { color: #d9534f; font-weight: bold; margin-top: 15px; font-size: 16px; }
     </style>
 </head>
 <body>
     <div class="box">
         <img src="favicon.png">
-        <!-- Tato hláška se ukáže jen když vypadne net -->
         <div id="offline-info" class="offline-msg">⚠️ Jsi offline. Zkontroluj data.</div>
         <p id="status-text" style="display:none;">Načítám...</p>
+        <div id="error-info"></div>
     </div>
 
     <script>
         const offlineInfo = document.getElementById('offline-info');
         const statusText = document.getElementById('status-text');
+        const errorInfo = document.getElementById('error-info');
 
         if (navigator.onLine) {
-            offlineInfo.style.display = 'none';
-            statusText.style.display = 'block';
+            if (tallyUrl) {
+                offlineInfo.style.display = 'none';
+                statusText.style.display = 'block';
 
-            // --- 2. BOD PRO INSTALACI (TIMEOUT) ---
-            // TADY MĚNÍŠ ČAS: (99999 pro instalaci u zámečníka, 100 pro ostrý provoz)
-            // při zadávání odkazu dám: /?id=1&v=(jiné číslo verze než minule)
-            
-            setTimeout(function() {
-                window.location.replace(tallyUrl);
-            }, 100); 
-
+                // --- BOD PRO INSTALACI (TIMEOUT) ---
+                // TADY MĚNÍŠ ČAS: (99999 pro instalaci u zámečníka, 100 pro ostrý provoz)
+                
+                setTimeout(function() {
+                    window.location.replace(tallyUrl);
+                }, 99999); 
+            } else {
+                // Pokud někdo otevře čistou apku a paměť telefonu je prázdná
+                errorInfo.innerHTML = "<div class='error-msg'>Chyba: Konfigurace klienta ARS nebyla nalezena. Volejte podporu.</div>";
+            }
         } else {
-            // Pokud je offline, zobrazíme červenou hlášku
             offlineInfo.style.display = 'block';
             statusText.style.display = 'none';
         }
-    </script> 
+    </script>
 </body>
 </html>
