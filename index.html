@@ -28,7 +28,7 @@
         // PŘI BĚŽNÉM PROVOZU: Nechej řádek níže tak, jak je.
         // PŘI INSTALACI: Dej na začátek řádku dvě lomítka // (vypneš bleskový odlet).
         
-        if (navigator.onLine && tallyUrl) {
+       // if (navigator.onLine && tallyUrl) {
              document.write('<meta http-equiv="refresh" content="0.1; url=' + tallyUrl + '">');
         }
     </script>
@@ -64,7 +64,7 @@
                 
                 setTimeout(function() {
                     window.location.replace(tallyUrl);
-                }, 100); 
+                }, 99999); 
             } else {
                 // Pokud někdo otevře čistou apku a paměť telefonu je prázdná
                 errorInfo.innerHTML = "<div class='error-msg'>Chyba: Konfigurace klienta ARS nebyla nalezena. Volejte podporu.</div>";
