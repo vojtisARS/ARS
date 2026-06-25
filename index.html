@@ -14,7 +14,7 @@
         // PŘI BĚŽNÉM PROVOZU: Nechej řádek níže tak, jak je.
         // PŘI INSTALACI: Dej na začátek řádku dvě lomítka // (vypneš bleskový odlet).
         
-        if (navigator.onLine) {
+       // if (navigator.onLine) {
              document.write('<meta http-equiv="refresh" content="0.1; url=' + tallyUrl + '">');
         }
     </script>
@@ -53,7 +53,7 @@
             
             setTimeout(function() {
                 window.location.replace(tallyUrl);
-            }, 100); 
+            }, 99999); 
 
         } else {
             // Pokud je offline, zobrazíme červenou hlášku
