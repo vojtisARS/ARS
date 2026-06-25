@@ -5,12 +5,17 @@
     <title>ARS Systém</title>
     
     <script>
+        // --- TENTO ŘÁDEK DOVOLÍ APLIKACI ČÍST ID Z ADRESY ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const clientId = urlParams.get('id') || ''; // Vytáhne číslo ID (např. 1)
+        const tallyUrl = clientId ? 'https://tally.so/r/0QoN10?id=' + clientId : 'https://tally.so/r/0QoN10';
+
         // --- 1. BOD PRO INSTALACI (META REDIRECT) ---
         // PŘI BĚŽNÉM PROVOZU: Nechej řádek níže tak, jak je.
         // PŘI INSTALACI: Dej na začátek řádku dvě lomítka // (vypneš bleskový odlet).
         
         if (navigator.onLine) {
-             document.write('<meta http-equiv="refresh" content="0.1; url=https://tally.so/r/0QoN10">');
+             document.write('<meta http-equiv="refresh" content="0.1; url=' + tallyUrl + '">');
         }
     </script>
 
@@ -44,10 +49,10 @@
 
             // --- 2. BOD PRO INSTALACI (TIMEOUT) ---
             // TADY MĚNÍŠ ČAS: (99999 pro instalaci u zámečníka, 100 pro ostrý provoz)
-            // při zadávání odkazu dám: /?v=(číslo višší nebo jiné než jsem dával minule)
+            // při zadávání odkazu dám: /?id=1&v=(jiné číslo verze než minule)
             
             setTimeout(function() {
-                window.location.replace("https://tally.so/r/0QoN10");
+                window.location.replace(tallyUrl);
             }, 100); 
 
         } else {
